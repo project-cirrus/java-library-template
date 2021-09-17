@@ -9,7 +9,6 @@
 plugins {
     // Support API and implementation separation.
     id "java-library"
-
     // Support building a distribution ZIP that contains the JAR file and the library dependencies.
     id "java-library-distribution"
 }
@@ -41,16 +40,12 @@ java {
 dependencies {
     // This dependency is used for code generation from annotated code.
     annotationProcessor "org.immutables:value:$versions.Immutables"
-
     // This dependency is only used to compile the source code.
     compileOnly "org.immutables:value:$versions.Immutables"
-
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api "org.apache.commons:commons-math3:$versions.ApacheCommonsMath"
-
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation "com.google.guava:guava:$versions.Guava"
-
     // Use JUnit Jupiter for testing.
     testImplementation "org.junit.jupiter:junit-jupiter:$versions.JUnit"
 }
