@@ -4,7 +4,7 @@ test_patterns = ["test/**"]
 
 exclude_patterns = [
   "gradle/**",
-  "gradle*\"",
+  "gradle*",
   "*.gradle"
 ]
 
