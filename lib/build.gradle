@@ -31,7 +31,7 @@ def versions = [
 ]
 
 // GitHub repository name for publishing to GitHub Packages
-repository = "example"
+def repository = "example"
 group "org.example"
 version versions.JavaLibraryTemplate
 
