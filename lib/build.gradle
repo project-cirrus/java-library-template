@@ -11,6 +11,21 @@ plugins {
     id "java-library"
     // Support building a distribution ZIP that contains the JAR file and the library dependencies.
     id "java-library-distribution"
+    // Support publishing build artifacts to an Apache Maven repository.
+    id "maven-publish"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = String.valueOf("https://maven.pkg.github.com/cirrus/$rootProject.name")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 repositories {
