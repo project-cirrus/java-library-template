@@ -65,8 +65,8 @@ publishing {
             name = "GitHubPackages"
             url = String.valueOf("https://maven.pkg.github.com/$repository/$rootProject.name")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
             }
         }
     }
