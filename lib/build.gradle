@@ -23,15 +23,17 @@ repositories {
 // Versions of all dependencies, organized in descending alphabetical order.
 def versions = [
         ApacheCommonsMath  : "3.6.1",
-        JavaLibraryTemplate: "1.0-SNAPSHOT",
+        JavaLibraryTemplate: "1.0.0",
         Guava              : "30.1-jre",
         Immutables         : "2.8.8",
         Java               : "11",
         JUnit              : "5.7.2"
 ]
 
-// GitHub repository name for publishing to GitHub Packages
-def repository = "example"
+// GitHub organization for publishing to GitHub Packages
+def organization = "example-organization"
+// GitHub repository for publishing to GitHub Packages
+def repository = String.valueOf("$rootProject.name")
 group "org.example"
 version versions.JavaLibraryTemplate
 
@@ -39,6 +41,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(versions.Java)
     }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -62,7 +66,7 @@ test {
 distributions {
     //noinspection GroovyAssignabilityCheck
     main {
-        distributionBaseName = "$rootProject.name"
+        distributionBaseName = repository
     }
 }
 
@@ -70,11 +74,19 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/$repository/$rootProject.name")
+            url = uri("https://maven.pkg.github.com/$organization/$repository")
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
             }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            groupId = group
+            artifactId = repository
+            version = versions.JavaLibraryTemplate
+            from components.java
         }
     }
 }
